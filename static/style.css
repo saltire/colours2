@@ -1,0 +1,14 @@
+body { background: #f8f8f8; }
+
+input { padding: 5px; border: 0; border-radius: 5px; background: rgba(255, 255, 255, .5); }
+
+ul { list-style: none; }
+header div,
+ul li div { display: inline-block; }
+ul li div input { width: 100%; }
+
+ul li div.colour { width: 50px; }
+ul li div.name { width: 300px; }
+ul li div.hex { width: 200px; }
+ul li div.numbers { width: 300px; }
+ul li div.numbers input { width: 80px; }
