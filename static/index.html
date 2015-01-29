@@ -5,7 +5,8 @@
         <meta charset='utf-8'>
         <link rel='stylesheet' href='style.css'>
         <script src='https://code.angularjs.org/1.3.10/angular.min.js'></script>
-        <script src='script.js'></script>
+        <script src='colours.js'></script>
+        <script src='main.js'></script>
     </head>
     <body ng-controller='colourCtrl'>
         <header>
@@ -20,20 +21,20 @@
             <span></span>
         </header>
         <ul>
-            <li ng-repeat='colour in colours'>
+            <li ng-repeat='colour in colours' colour-row>
                 <a class='handle left' title='move up/down'>░</a>
                 <div class='colour' style='background-color: {{ colour.hex }};'></div>
-                <div class='name'><input type='text' name='name{{ $index }}' maxlength='50' value='{{ colour.name }}'></div>
-                <div class='hex'><input type='text' name='hex{{ $index }}' maxlength='7' value='{{ colour.hex }}'></div>
+                <div class='name'><input type='text' maxlength='50' ng-model='colour.name'></div>
+                <div class='hex'><input type='text' maxlength='7' ng-model='colour.hex' ng-model-options='{updateOn: "change"}' hex-colour></div>
                 <div class='numbers'>
-                    <input type='text' name='r{{ $index }}' maxlength='3' value='{{ colour.red }}'>
-                    <input type='text' name='g{{ $index }}' maxlength='3' value='{{ colour.green }}'>
-                    <input type='text' name='b{{ $index }}' maxlength='3' value='{{ colour.blue }}'>
+                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='colour.red'>
+                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='colour.green'>
+                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='colour.blue'>
                 </div>
                 <div class='numbers'>
-                    <input type='text' name='h{{ $index }}' maxlength='3' value='{{ colour.hue }}'>
-                    <input type='text' name='s{{ $index }}' maxlength='3' value='{{ colour.sat }}'>
-                    <input type='text' name='v{{ $index }}' maxlength='3' value='{{ colour.val }}'>
+                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='colour.hue'>
+                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='colour.sat'>
+                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='colour.val'>
                 </div>
                 <div class='colour' style='background-color: {{ colour.hex }};'></div>
                 <a class='setbkgd right' title='set as background'>▣</a>
