@@ -10,22 +10,22 @@
     </head>
     <body ng-controller='colourCtrl'>
         <header>
-            <span></span>
+            <div></div>
             <div class='colour'></div>
             <div class='name'>Name</div>
             <div class='hex'>Hex</div>
             <div class='numbers'>RGB</div>
             <div class='numbers'>HSV</div>
             <div class='colour'></div>
-            <span></span>
-            <span></span>
+            <div></div>
+            <div></div>
         </header>
         <ul>
             <li ng-repeat='colour in colours' colour-row>
-                <a class='handle left' title='move up/down'>░</a>
+                <a class='handle' title='Move up/down'>░</a>
                 <div class='colour' style='background-color: {{ colour.hex }};'></div>
-                <div class='name'><input type='text' maxlength='50' ng-model='colour.name'></div>
-                <div class='hex'><input type='text' maxlength='7' ng-model='colour.hex' ng-model-options='{updateOn: "change"}' hex-colour></div>
+                <input class='name' type='text' maxlength='50' ng-model='colour.name'></div>
+                <input class='hex' type='text' maxlength='7' ng-model='colour.hex' ng-model-options='{updateOn: "change"}' hex-colour></div>
                 <div class='numbers'>
                     <input type='text' name='r{{ $index }}' maxlength='3' ng-model='colour.red'>
                     <input type='text' name='g{{ $index }}' maxlength='3' ng-model='colour.green'>
@@ -37,8 +37,8 @@
                     <input type='text' name='v{{ $index }}' maxlength='3' ng-model='colour.val'>
                 </div>
                 <div class='colour' style='background-color: {{ colour.hex }};'></div>
-                <a class='setbkgd right' title='set as background'>▣</a>
-                <a class='delete right' title='remove'>✕</a>
+                <a class='setbkgd' title='Set as background'>▣</a>
+                <a class='delete' title='Remove'>✕</a>
             </li>
         </ul>
     </body>
