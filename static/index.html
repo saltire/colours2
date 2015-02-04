@@ -23,20 +23,20 @@
         <ul>
             <li ng-repeat='colour in colours' colour-row>
                 <a class='handle' title='Move up/down'>░</a>
-                <div class='colour' style='background-color: {{ colour.hex }};'></div>
+                <div class='colour' style='background-color: rgb({{ colour.red }}, {{ colour.green }}, {{ colour.blue }});'></div>
                 <input class='name' type='text' maxlength='50' ng-model='colour.name'></div>
-                <input class='hex' type='text' maxlength='7' ng-model='colour.hex' ng-model-options='{updateOn: "change"}' hex-colour></div>
+                <input class='hex' type='text' maxlength='7' ng-model='colour.hex' hex-colour></div>
                 <div class='numbers'>
-                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='colour.red'>
-                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='colour.green'>
-                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='colour.blue'>
+                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='colour.red' max='255'>
+                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='colour.green' max='255'>
+                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='colour.blue' max='255'>
                 </div>
                 <div class='numbers'>
-                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='colour.hue'>
-                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='colour.sat'>
-                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='colour.val'>
+                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='colour.hue' max='255'>
+                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='colour.sat' max='255'>
+                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='colour.val' max='100'>
                 </div>
-                <div class='colour' style='background-color: {{ colour.hex }};'></div>
+                <div class='colour' style='background-color: rgb({{ colour.red }}, {{ colour.green }}, {{ colour.blue }});'></div>
                 <a class='setbkgd' title='Set as background'>▣</a>
                 <a class='delete' title='Remove'>✕</a>
             </li>
