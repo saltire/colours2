@@ -3,33 +3,93 @@ var colourApp = angular.module('colourApp', []);
 colourApp.controller('colourCtrl', function ($scope, $log, $http) {
     $http.get('colours.json').then(function (res) {
         $scope.colours = res.data;
-
-        angular.forEach($scope.colours, function (colour) {
-            colour.hex = rgb2hex(colour.red, colour.green, colour.blue);
-        });
     });
 });
 
-colourApp.directive('colourRow', function ($log) {
+function sync_values(scope) {
+    scope.red = scope.colour.red;
+    scope.green = scope.colour.green;
+    scope.blue = scope.colour.blue;
+
+    var hsv = rgb2hsv(scope.colour.red, scope.colour.green, scope.colour.blue);
+    scope.hue = hsv.hue;
+    scope.sat = hsv.sat;
+    scope.val = hsv.val;
+
+    scope.hex = rgb2hex(scope.colour.red, scope.colour.green, scope.colour.blue);
+}
+
+colourApp.directive('colourRow', function () {
     return {
         link: function (scope, elem, attr) {
-            scope.$watchGroup(['colour.red', 'colour.green', 'colour.blue'], function () {
-                console.log('watch rgb');
-                var hsv = rgb2hsv(scope.colour.red, scope.colour.green, scope.colour.blue);
-                scope.colour.hue = hsv.h;
-                scope.colour.sat = hsv.s;
-                scope.colour.val = hsv.v;
+            sync_values(scope);
+        }
+    };
+});
 
-                scope.colour.hex = rgb2hex(scope.colour.red, scope.colour.green, scope.colour.blue);
+colourApp.directive('max', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ngModel) {
+            ngModel.$parsers.push(function (value) {
+                return typeof value == 'number' ? value : parseInt(value.replace(/[^\d]/g, ''));
+            });
+
+            ngModel.$validators.max = function (modelValue, viewValue) {
+                return modelValue <= parseInt(attrs.max);
+            };
+        }
+    };
+});
+
+colourApp.directive('colourValue', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ngModel) {
+            // sync value with colour on unfocus
+            elem.on('change', function (e) {
+                sync_values(scope);
+                ngModel.$setViewValue(scope[attrs.ngModel]);
+                ngModel.$render();
             });
         }
     };
 });
 
-colourApp.directive('hexColour', function ($log) {
+colourApp.directive('colourRgb', function () {
     return {
         require: 'ngModel',
-        link: function (scope, elem, attr, ngModel) {
+        link: function (scope, elem, attrs, ngModel) {
+            // sync colour with values on update, if valid
+            ngModel.$viewChangeListeners.push(function () {
+                if (scope.red !== undefined && scope.green !== undefined && scope.blue !== undefined) {
+                    scope.colour.red = scope.red;
+                    scope.colour.green = scope.green;
+                    scope.colour.blue = scope.blue;
+                }
+            });
+        }
+    };
+});
+
+colourApp.directive('colourHsv', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ngModel) {
+            // sync colour with values on update, if valid
+            ngModel.$viewChangeListeners.push(function () {
+                if (scope.hue !== undefined && scope.sat !== undefined && scope.val !== undefined) {
+                    angular.extend(scope.colour, hsv2rgb(scope.hue, scope.sat, scope.val));
+                }
+            });
+        }
+    };
+});
+
+colourApp.directive('colourHex', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elem, attrs, ngModel) {
             // parse value on update
             ngModel.$parsers.push(function (value) {
                 return value.toUpperCase()
@@ -39,23 +99,15 @@ colourApp.directive('hexColour', function ($log) {
 
             // validate parsed value on update
             ngModel.$validators.hex = function (modelValue, viewValue) {
-                return /#?[A-F0-9]{6}/.test(modelValue || viewValue);
+                return /#?[A-F0-9]{6}/.test(modelValue);
             };
 
-            // update RGB on update, if valid
+            // sync colour with value on update, if valid
             ngModel.$viewChangeListeners.push(function () {
                 if (ngModel.$valid) {
-                    scope.colour.red = parseInt(ngModel.$modelValue.slice(1, 3), 16);
-                    scope.colour.green = parseInt(ngModel.$modelValue.slice(3, 5), 16),
-                    scope.colour.blue = parseInt(ngModel.$modelValue.slice(5, 7), 16);
+                    angular.extend(scope.colour, hex2rgb(ngModel.$modelValue));
                 }
             });
-
-            // display parsed value on unfocus
-            elem.on('change', function (e) {
-                ngModel.$setViewValue(ngModel.$modelValue);
-                ngModel.$render();
-            });
         }
-    }
+    };
 });

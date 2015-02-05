@@ -3,6 +3,15 @@ function rgb2hex(r, g, b) {
     return '#' + '000000'.slice(hex.length) + hex;
 }
 
+function hex2rgb(hex) {
+    // this function assumes a valid hex string in the format #RRGGBB
+    return {
+        red: parseInt(hex.slice(1, 3), 16),
+        green: parseInt(hex.slice(3, 5), 16),
+        blue: parseInt(hex.slice(5, 7), 16)
+    };
+}
+
 function rgb2hsv(r, g, b) {
     r /= 255;
     g /= 255;
@@ -27,7 +36,11 @@ function rgb2hsv(r, g, b) {
         v = Math.floor(max * 100);
     }
 
-    return {h: h, s: s, v: v};
+    return {
+        hue: h,
+        sat: s,
+        val: v
+    };
 }
 
 function hsv2rgb(h, s, v) {
@@ -79,8 +92,8 @@ function hsv2rgb(h, s, v) {
     }
 
     return {
-        r: Math.floor(r * 255),
-        g: Math.floor(g * 255),
-        b: Math.floor(b * 255)
+        red: Math.floor(r * 255),
+        green: Math.floor(g * 255),
+        blue: Math.floor(b * 255)
     };
 }
