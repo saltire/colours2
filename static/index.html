@@ -27,14 +27,14 @@
                 <input class='name' type='text' maxlength='50' ng-model='colour.name'></div>
                 <input class='hex' type='text' maxlength='7' ng-model='hex' colour-value colour-hex></div>
                 <div class='numbers'>
-                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='red' colour-value colour-rgb max='255'>
-                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='green' colour-value colour-rgb max='255'>
-                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='blue' colour-value colour-rgb max='255'>
+                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='red' colour-value colour-rgb colour-range='255'>
+                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='green' colour-value colour-rgb colour-range='255'>
+                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='blue' colour-value colour-rgb colour-range='255'>
                 </div>
                 <div class='numbers'>
-                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='hue' colour-value colour-hsv max='255'>
-                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='sat' colour-value colour-hsv max='255'>
-                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='val' colour-value colour-hsv max='100'>
+                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='hue' colour-value colour-hsv colour-range='359'>
+                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='sat' colour-value colour-hsv colour-range='100'>
+                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='val' colour-value colour-hsv colour-range='100'>
                 </div>
                 <div class='colour' style='background-color: rgb({{ colour.red }}, {{ colour.green }}, {{ colour.blue }});'></div>
                 <a class='setbkgd' title='Set as background'>▣</a>

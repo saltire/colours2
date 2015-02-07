@@ -6,10 +6,11 @@ colourApp.controller('colourCtrl', function ($scope, $log, $http) {
     });
 });
 
+// update all values in a row to match that row's RGB colour
 function sync_values(scope) {
-    scope.red = scope.colour.red;
-    scope.green = scope.colour.green;
-    scope.blue = scope.colour.blue;
+    scope.red = parseInt(scope.colour.red);
+    scope.green = parseInt(scope.colour.green);
+    scope.blue = parseInt(scope.colour.blue);
 
     var hsv = rgb2hsv(scope.colour.red, scope.colour.green, scope.colour.blue);
     scope.hue = hsv.hue;
@@ -19,6 +20,7 @@ function sync_values(scope) {
     scope.hex = rgb2hex(scope.colour.red, scope.colour.green, scope.colour.blue);
 }
 
+// a row of input elements representing a single colour
 colourApp.directive('colourRow', function () {
     return {
         link: function (scope, elem, attr) {
@@ -27,21 +29,50 @@ colourApp.directive('colourRow', function () {
     };
 });
 
-colourApp.directive('max', function () {
+// a numeric text input element with a maximum value
+colourApp.directive('colourRange', function () {
     return {
         require: 'ngModel',
         link: function (scope, elem, attrs, ngModel) {
+            elem.on('keydown', function (e) {
+                var max = parseInt(attrs.colourRange),
+                    value = ngModel.$modelValue;
+                if (value === undefined) return;
+
+                if (e.which == 38) value += 1;       // up
+                else if (e.which == 40) value -= 1;  // down
+                else if (e.which == 33) value += 10; // page up
+                else if (e.which == 34) value -= 10; // page down
+                else return;
+
+                if (attrs.ngModel == 'hue') {
+                    // hue is cyclical, so loop the value if it goes out of range
+                    if (value < 0) value += max + 1;
+                    else if (value > max) value -= max + 1;
+                }
+                else {
+                    // otherwise clamp the value to the range
+                    if (value < 0) value = 0;
+                    else if (value > max) value = max;
+                }
+
+                // update the view
+                ngModel.$setViewValue(value.toString());
+                ngModel.$render();
+            });
+
             ngModel.$parsers.push(function (value) {
                 return typeof value == 'number' ? value : parseInt(value.replace(/[^\d]/g, ''));
             });
 
             ngModel.$validators.max = function (modelValue, viewValue) {
-                return modelValue <= parseInt(attrs.max);
+                return modelValue <= parseInt(attrs.colourRange);
             };
         }
     };
 });
 
+// an input element for any RGB/HSV/hex value
 colourApp.directive('colourValue', function () {
     return {
         require: 'ngModel',
@@ -56,6 +87,7 @@ colourApp.directive('colourValue', function () {
     };
 });
 
+// an input element for an RGB value
 colourApp.directive('colourRgb', function () {
     return {
         require: 'ngModel',
@@ -72,6 +104,7 @@ colourApp.directive('colourRgb', function () {
     };
 });
 
+// an input element for an HSV value
 colourApp.directive('colourHsv', function () {
     return {
         require: 'ngModel',
@@ -86,6 +119,7 @@ colourApp.directive('colourHsv', function () {
     };
 });
 
+// an input element for a hex colour code
 colourApp.directive('colourHex', function () {
     return {
         require: 'ngModel',
