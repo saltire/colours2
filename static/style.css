@@ -11,7 +11,7 @@ ul li { margin: 5px 0; font-size: 0; line-height: 34px; }
 header div,
 ul li div,
 ul li a,
-ul li input { display: inline-block; height: 40px; margin: 0 5px; vertical-align: top; }
+ul li input { display: inline-block; height: 40px; margin: 0 6px; vertical-align: top; }
 
 header div,
 ul li a { width: 24px; font-size: 20px; }
@@ -21,8 +21,8 @@ ul li input { box-sizing: border-box; font-size: 20px; }
 .colour { width: 60px; border-radius: 3px; }
 .name { width: 300px; }
 .hex { width: 100px; }
-.numbers { width: 270px; margin: 0; }
-.numbers input { width: 80px; text-align: center; }
+.numbers { width: 258px; margin: 0 3px; }
+.numbers input { width: 80px; margin: 0 3px; text-align: center; }
 
 .handle { cursor: ns-resize; }
 .setbkgd, .delete { cursor: pointer; }
