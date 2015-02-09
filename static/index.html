@@ -8,22 +8,17 @@
         <script src='colours.js'></script>
         <script src='main.js'></script>
     </head>
-    <body ng-controller='colourCtrl'>
+    <body ng-controller='colourCtrl' ng-style='bodyStyle' ng-class='bodyClass'>
         <header>
-            <div></div>
-            <div class='colour'></div>
             <div class='name'>Name</div>
             <div class='hex'>Hex</div>
             <div class='numbers'>RGB</div>
             <div class='numbers'>HSV</div>
-            <div class='colour'></div>
-            <div></div>
-            <div></div>
         </header>
         <ul>
             <li ng-repeat='colour in colours' colour-row>
                 <a class='handle' title='Move up/down'>░</a>
-                <div class='colour' style='background-color: rgb({{ colour.red }}, {{ colour.green }}, {{ colour.blue }});'></div>
+                <div class='colour' title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></div>
                 <input class='name' type='text' maxlength='50' ng-model='colour.name'></div>
                 <input class='hex' type='text' maxlength='7' ng-model='hex' colour-value colour-hex></div>
                 <div class='numbers'>
@@ -36,8 +31,7 @@
                     <input type='text' name='s{{ $index }}' maxlength='3' ng-model='sat' colour-value colour-hsv colour-range='100'>
                     <input type='text' name='v{{ $index }}' maxlength='3' ng-model='val' colour-value colour-hsv colour-range='100'>
                 </div>
-                <div class='colour' style='background-color: rgb({{ colour.red }}, {{ colour.green }}, {{ colour.blue }});'></div>
-                <a class='setbkgd' title='Set as background'>▣</a>
+                <div class='colour' title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></div>
                 <a class='delete' title='Remove'>✕</a>
             </li>
         </ul>

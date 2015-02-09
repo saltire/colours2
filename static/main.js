@@ -1,9 +1,18 @@
 var colourApp = angular.module('colourApp', []);
 
-colourApp.controller('colourCtrl', function ($scope, $log, $http) {
+colourApp.controller('colourCtrl', function ($scope, $http) {
     $http.get('colours.json').then(function (res) {
         $scope.colours = res.data;
     });
+
+    $scope.bodyStyle = {};
+    $scope.bodyClass = '';
+
+    var threshold = 35;
+    $scope.setBackground = function (colour) {
+        $scope.bodyStyle = {'background-color': rgb2hex(colour.red, colour.green, colour.blue)};
+        $scope.bodyClass = rgb2hsv(colour.red, colour.green, colour.blue).val > threshold ? 'light' : 'dark';
+    };
 });
 
 // update all values in a row to match that row's RGB colour
@@ -25,6 +34,10 @@ colourApp.directive('colourRow', function () {
     return {
         link: function (scope, elem, attr) {
             sync_values(scope);
+
+            scope.getCss = function () {
+                return 'background-color: ' + rgb2hex(scope.colour.red, scope.colour.green, scope.colour.blue);
+            }
         }
     };
 });

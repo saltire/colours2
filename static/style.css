@@ -1,24 +1,25 @@
-body { background: #f8f8f8; }
+body { background: #f8f8f8; color: #333; }
+body.dark { color: #ccc; }
 
 input { padding: 5px 10px; border: 0; border-radius: 3px; background: rgba(255, 255, 255, .7);
     color: #666; font-family: sans-serif; line-height: 24px; }
 input:focus { background: rgba(255, 255, 255, .9); }
+body.dark input { color: #333; }
 
-header, ul { text-align: center; }
+header, ul { font-size: 0; text-align: center; }
 ul { margin: 0; padding: 0; list-style: none; }
-ul li { margin: 5px 0; font-size: 0; line-height: 34px; }
+ul li { margin: 5px 0; line-height: 34px; }
 
 header div,
 ul li div,
 ul li a,
 ul li input { display: inline-block; height: 40px; margin: 0 6px; vertical-align: top; }
 
-header div,
-ul li a { width: 24px; font-size: 20px; }
+header div, ul li a { width: 24px; font-size: 20px; }
 
 ul li input { box-sizing: border-box; font-size: 20px; }
 
-.colour { width: 60px; border-radius: 3px; }
+.colour { width: 60px; border-radius: 3px; cursor: pointer; }
 .name { width: 300px; }
 .hex { width: 100px; }
 .numbers { width: 258px; margin: 0 3px; }
