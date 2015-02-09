@@ -78,9 +78,9 @@ colourApp.directive('colourValue', function () {
         require: 'ngModel',
         link: function (scope, elem, attrs, ngModel) {
             // sync value with colour on unfocus
-            elem.on('change', function (e) {
+            elem.on('blur', function (e) {
                 sync_values(scope);
-                ngModel.$setViewValue(scope[attrs.ngModel]);
+                ngModel.$setViewValue(scope[attrs.ngModel].toString());
                 ngModel.$render();
             });
         }
