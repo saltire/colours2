@@ -3,37 +3,47 @@
     <head>
         <title>Colours :: saltire sable</title>
         <meta charset='utf-8'>
-        <link rel='stylesheet' href='style.css'>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css'>
+        <link rel='stylesheet' href='style2.css'>
         <script src='https://code.angularjs.org/1.3.10/angular.min.js'></script>
         <script src='colours.js'></script>
         <script src='main.js'></script>
     </head>
     <body ng-controller='colourCtrl' ng-style='bodyStyle' ng-class='bodyClass'>
-        <header>
-            <div class='name'>Name</div>
-            <div class='hex'>Hex</div>
-            <div class='numbers'>RGB</div>
-            <div class='numbers'>HSV</div>
-        </header>
-        <ul>
-            <li ng-repeat='colour in colours' colour-row>
-                <a class='handle' title='Move up/down'>░</a>
-                <div class='colour' title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></div>
-                <input class='name' type='text' maxlength='50' ng-model='colour.name'></div>
-                <input class='hex' type='text' maxlength='7' ng-model='hex' colour-value colour-hex></div>
-                <div class='numbers'>
-                    <input type='text' name='r{{ $index }}' maxlength='3' ng-model='red' colour-value colour-rgb colour-range='255'>
-                    <input type='text' name='g{{ $index }}' maxlength='3' ng-model='green' colour-value colour-rgb colour-range='255'>
-                    <input type='text' name='b{{ $index }}' maxlength='3' ng-model='blue' colour-value colour-rgb colour-range='255'>
+        <nav class='navbar navbar-default navbar-fixed-top'>
+            <div class='container-fluid'>
+                <div class='navbar-header'>
+                    <span class='navbar-brand'>Colours</span>
                 </div>
-                <div class='numbers'>
-                    <input type='text' name='h{{ $index }}' maxlength='3' ng-model='hue' colour-value colour-hsv colour-range='359'>
-                    <input type='text' name='s{{ $index }}' maxlength='3' ng-model='sat' colour-value colour-hsv colour-range='100'>
-                    <input type='text' name='v{{ $index }}' maxlength='3' ng-model='val' colour-value colour-hsv colour-range='100'>
-                </div>
-                <div class='colour' title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></div>
-                <a class='delete' title='Remove'>✕</a>
-            </li>
-        </ul>
+            </div>
+        </nav>
+        <main>
+            <header>
+                <div class='name'>Name</div>
+                <div class='hex'>Hex</div>
+                <div class='numbers'>RGB</div>
+                <div class='numbers'>HSV</div>
+            </header>
+            <ul>
+                <li ng-repeat='colour in colours' colour-row>
+                    <div class='control left'><a class='handle' title='Move up/down'>░</a></div>
+                    <div class='colour'><button title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></button></div>
+                    <div class='name'><input type='text' maxlength='50' ng-model='colour.name'></div>
+                    <div class='hex'><input type='text' maxlength='7' ng-model='hex' colour-value colour-hex></div>
+                    <div class='numbers'>
+                        <div class='number'><input type='text' name='r{{ $index }}' maxlength='3' ng-model='red' colour-value colour-rgb colour-range='255'></div>
+                        <div class='number'><input type='text' name='g{{ $index }}' maxlength='3' ng-model='green' colour-value colour-rgb colour-range='255'></div>
+                        <div class='number'><input type='text' name='b{{ $index }}' maxlength='3' ng-model='blue' colour-value colour-rgb colour-range='255'></div>
+                    </div>
+                    <div class='numbers'>
+                        <div class='number'><input type='text' name='h{{ $index }}' maxlength='3' ng-model='hue' colour-value colour-hsv colour-range='359'></div>
+                        <div class='number'><input type='text' name='s{{ $index }}' maxlength='3' ng-model='sat' colour-value colour-hsv colour-range='100'></div>
+                        <div class='number'><input type='text' name='v{{ $index }}' maxlength='3' ng-model='val' colour-value colour-hsv colour-range='100'></div>
+                    </div>
+                    <div class='colour'><button title='Set background to {{ colour.name }}' ng-click='setBackground(colour)' style='{{ getCss() }}'></button></div>
+                    <div class='control right'><a class='delete' title='Remove'>✕</a></div>
+                </li>
+            </ul>
+        </main>
     </body>
 </html>
